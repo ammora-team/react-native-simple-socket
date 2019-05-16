@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.GuardedAsyncTask;
+import android.os.AsyncTask;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.concurrent.Executor;
@@ -47,6 +48,10 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
   }
 
   private final SerialExecutor executor;
+
+  public RNSimpleSocketModule(ReactApplicationContext reactContext) {
+    this(reactContext, AsyncTask.THREAD_POOL_EXECUTOR);
+  }
 
   public RNSimpleSocketModule(ReactApplicationContext reactContext, Executor executor) {
     super(reactContext);

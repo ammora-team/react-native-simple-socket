@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.ammora;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -71,13 +71,13 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
           String result = "";
 
           while ((line = reader.readLine()) != null) {
-            result = result.concat(line)
+            result = result.concat(line);
           }
-          callback.invoke(null, result)
+          callback.invoke(null, result);
         } catch (UnknownHostException ex) {
-          callback.invoke(ex, null)
+          callback.invoke(ex, null);
         } catch (IOException ex) {
-          callback.invoke(ex, null)
+          callback.invoke(ex, null);
         }
       }
     }.executeOnExecutor(executor);

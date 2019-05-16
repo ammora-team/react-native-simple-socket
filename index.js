@@ -17,5 +17,14 @@ const Socket = {
   }
 }
 
-export default Socket
+function convertError(error) {
+  if (!error) {
+    return null;
+  }
+  const out = new Error(error.message);
+  // $FlowFixMe: adding custom properties to error.
+  out.key = error.key;
+  return out;
+}
 
+export default Socket

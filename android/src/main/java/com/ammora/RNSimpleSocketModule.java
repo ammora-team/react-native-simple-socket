@@ -48,14 +48,14 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
 
   private final SerialExecutor executor;
 
-  public RNSimpleSocketModule(ReactApplicationContext reactContext) {
+  public RNSimpleSocketModule(ReactApplicationContext reactContext, Executor executor) {
     super(reactContext);
     this.reactContext = reactContext;
     this.executor = new SerialExecutor(executor);
   }
 
   @ReactMethod
-  public String send(String hostname, int port, String data, final Callback callback) {
+  public String send(final String hostname, final int port, final String data, final Callback callback) {
     new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
       @Override
       protected void doInBackgroundGuarded(Void... params) {

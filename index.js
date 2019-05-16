@@ -5,12 +5,13 @@ const { RNSimpleSocket } = NativeModules;
 const Socket = {
   send: function(hostname, port, data) {
     return new Promise((resolve, reject) => {
-      RNSimpleSocket.send(hostname, port, data, function(error) {
+      RNSimpleSocket.send(hostname, port, data, function(error, result) {
         const err = convertError(error);
+        const value = result ? result : null;
         if (err) {
           reject(err);
         } else {
-          resolve(null);
+          resolve(value);
         }
       });
     });

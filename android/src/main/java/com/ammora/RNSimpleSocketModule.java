@@ -60,7 +60,7 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public String send(final String hostname, final int port, final String data, final Callback callback) {
+  public void send(final String hostname, final int port, final String data, final Callback callback) {
     new GuardedAsyncTask<Void, Void>(getReactApplicationContext()) {
       @Override
       protected void doInBackgroundGuarded(Void... params) {

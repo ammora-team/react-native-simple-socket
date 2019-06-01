@@ -14,7 +14,7 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void send(final String hostname, final int port, final String data, final Promise promise) {
+  public void send(final String hostname, final int port, final String data, Promise promise) {
     try (Socket socket = new Socket(hostname, port)) {
       OutputStream output = socket.getOutputStream();
       PrintWriter writer = new PrintWriter(output, true);
@@ -30,11 +30,11 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
       while ((line = reader.readLine()) != null) {
         result = result.concat(line);
       }
-      Promise.resolve(result);
+      promise.resolve(result);
     } catch (UnknownHostException ex) {
-      Promise.reject(ex);
+      promise.reject(ex);
     } catch (IOException ex) {
-      Promise.reject(ex);
+      promise.reject(ex);
     }
   }
 

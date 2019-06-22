@@ -5,10 +5,14 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
+import com.facebook.common.logging.FLog;
+
 import java.net.*;
 import java.io.*;
 
 public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
+  private static final String TAG = "RNSimpleSocket";
+
   public RNSimpleSocketModule(ReactApplicationContext reactContext) {
     super(reactContext);
   }
@@ -32,8 +36,10 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
       }
       promise.resolve(result);
     } catch (UnknownHostException ex) {
+      FLog.e(TAG, ex.toString());
       promise.reject(ex);
     } catch (IOException ex) {
+      FLog.e(TAG, ex.toString());
       promise.reject(ex);
     }
   }

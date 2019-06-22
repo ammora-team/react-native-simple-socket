@@ -19,13 +19,21 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void send(final String hostname, final int port, final String data, Promise promise) {
-    try (Socket socket = new Socket(hostname, port)) {
+    try {
+      // check connection
+      Boolean Check = InetAddress.getByName(hostname).isReachable(1000);
+      if (Check == false) {
+        promise.reject("");
+        return;
+      }
+      InetSocketAddress socketAddress = new InetSocketAddress(hostname, port);
+      Socket socket = new Socket();
+      socket.connect(socketAddress, 5000);
       OutputStream output = socket.getOutputStream();
       PrintWriter writer = new PrintWriter(output, true);
       writer.println(data);
 
       InputStream input = socket.getInputStream();
-
       BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
       String line;
@@ -34,8 +42,10 @@ public class RNSimpleSocketModule extends ReactContextBaseJavaModule {
       while ((line = reader.readLine()) != null) {
         result = result.concat(line);
       }
+
+      socket.close();
       promise.resolve(result);
-    } catch (UnknownHostException ex) {
+    } catch (SocketException ex) {
       FLog.e(TAG, ex.toString());
       promise.reject(ex);
     } catch (IOException ex) {
